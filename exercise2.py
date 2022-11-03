@@ -14,6 +14,21 @@ class Point2D:
     def y(self) -> float:
         return self._coordinates[1]
 
+    def __iadd__(self, other: Point2D) -> Point2D:
+        if isinstance(other, Point2D):
+            self._coordinates += other._coordinates
+            return self
+        elif isinstance(other, Vector):
+            self._coordinates += other
+            return self
+    
+    def __isub__(self, other):
+        if isinstance(other, Point2D):
+            self._coordinates = self._coordinates.__sub__(other._coordinates)
+        elif isinstance(other, Vector):
+            self._coordinates = self._coordinates.__sub__(other)
+        return self
+
 
 def test_point_construction() -> None:
     point = Point2D(1.0, 42.0)
@@ -23,7 +38,6 @@ def test_point_construction() -> None:
 
 def test_point_vector_addition() -> None:
     point = Point2D(1.0, 2.0)
-    # Task A: make the test below pass (implement __iadd__)
     point += Vector([1.1, 2.2])
     assert isclose(point.x, 2.1)
     assert isclose(point.y, 4.2)
