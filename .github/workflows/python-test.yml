@@ -23,6 +23,6 @@ jobs:
         pip install pytest
     - name: Build package
       run: |
-          python -m pytest .\exercise1.py          
-          python -m pytest .\exercise2.py          
-          python -m pytest .\exercise3.py
+          python -m pytest exercise1.py          
+          python -m pytest exercise2.py          
+          python -m pytest exercise3.py
