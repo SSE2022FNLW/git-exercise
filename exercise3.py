@@ -25,9 +25,9 @@ class Rectangle:
     def upper_right(self) -> Point2D:
         return self.corner(3)
 
-    def contains(self, point: Point2D) -> bool:
-        return is_in_interval(point.x, self._lower_left.x, self._dx) and \
-            is_in_interval(point.y, self._lower_left.y, self._dy)
+    def contains(self, point: Point2D, tolerance: float = 0.0) -> bool:
+        return is_in_interval(point.x, self._lower_left.x, self._dx, tolerance) and \
+            is_in_interval(point.y, self._lower_left.y, self._dy, tolerance)
 
     def _is_idx_on_upper_edge(self, i: int) -> bool:
         return i in [2, 3]
@@ -36,9 +36,9 @@ class Rectangle:
         return i in [1, 3]
 
 
-def is_in_interval(oridnate: int, lower_left_ordinate: int, length: int) -> bool:
-    ll_px = oridnate - lower_left_ordinate
-    return ll_px >= 0 and ll_px <= length
+def is_in_interval(ordinate: int, lower_left_ordinate: int, length: int, tolerance: float = 0.0) -> bool:
+    ll_p = ordinate - lower_left_ordinate
+    return ll_p >= - tolerance and ll_p <= length + tolerance
 
 
 def test_rectangle_contains_exact() -> None:
@@ -70,7 +70,6 @@ def test_rectangle_contains_tolerance() -> None:
     assert not rectangle.contains(lower_right)
     assert not rectangle.contains(upper_right)
 
-    # Task B: make the tests below pass by adding optional tolerance argument to `contains`
     assert not rectangle.contains(lower_left, tolerance=eps/2.0)
     assert not rectangle.contains(upper_left, tolerance=eps/2.0)
     assert not rectangle.contains(lower_right, tolerance=eps/2.0)
