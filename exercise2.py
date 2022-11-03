@@ -21,6 +21,13 @@ class Point2D:
         elif isinstance(other, Vector):
             self._coordinates += other
             return self
+    
+    def __isub__(self, other):
+        if isinstance(other, Point2D):
+            self._coordinates = self._coordinates.__sub__(other._coordinates)
+        elif isinstance(other, Vector):
+            self._coordinates = self._coordinates.__sub__(other)
+        return self
 
 
 def test_point_construction() -> None:
